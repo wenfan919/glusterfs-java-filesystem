@@ -1,3 +1,75 @@
+# Working at glusterfs extension for object storage
+
+Fork
+
+    localhost:github.com fanhongling$ pwd
+    /Users/fanhongling/Downloads/workspace/src/github.com
+    
+    localhost:github.com fanhongling$ git clone https://github.com/stackdocker/glusterfs-java-filesystem gluster/gluster-java-filesystem
+    Cloning into 'gluster/gluster-java-filesystem'...
+    remote: Counting objects: 2297, done.
+    remote: Total 2297 (delta 0), reused 0 (delta 0), pack-reused 2297
+    Receiving objects: 100% (2297/2297), 307.60 KiB | 139.00 KiB/s, done.
+    Resolving deltas: 100% (811/811), done.
+    Checking connectivity... done.
+    
+    localhost:github.com fanhongling$ cd gluster/gluster-java-filesystem/
+    
+    localhost:gluster-java-filesystem fanhongling$ git remote add upstream https://github.com/gluster/glusterfs-java-filesystem
+    
+    localhost:gluster-java-filesystem fanhongling$ git remote -v
+    origin	https://github.com/stackdocker/glusterfs-java-filesystem (fetch)
+    origin	https://github.com/stackdocker/glusterfs-java-filesystem (push)
+    upstream	https://github.com/gluster/glusterfs-java-filesystem (fetch)
+    upstream	https://github.com/gluster/glusterfs-java-filesystem (push)
+
+Build example
+
+    localhost:gluster-java-filesystem fanhongling$ ls
+    LICENSE.txt				catlogs.sh				pom.xml
+    README.md				glusterfs-java-filesystem		vagrant-provisioner.sh
+    Vagrantfile				glusterfs-java-filesystem-example
+
+    localhost:gluster-java-filesystem fanhongling$ cd glusterfs-java-filesystem-example/
+
+    localhost:glusterfs-java-filesystem-example fanhongling$ mvn package -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+    [INFO] Scanning for projects...
+    [INFO]                                                                         
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Building jar: /Users/fanhongling/Downloads/workspace/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/target/glusterfs-java-filesystem-example-1.0.5-SNAPSHOT.jar
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time: 01:53 min
+    [INFO] Finished at: 2017-03-05T02:36:42-08:00
+    [INFO] Final Memory: 18M/245M
+    [INFO] ------------------------------------------------------------------------
+
+    localhost:glusterfs-java-filesystem-example fanhongling$ ls ~/.m2/repository/com/peircean/
+    glusterfs	libgfapi-jni
+
+    localhost:glusterfs-java-filesystem-example fanhongling$ ls target/
+    classes							maven-archiver
+    generated-sources					maven-status
+    generated-test-sources					surefire-reports
+    glusterfs-java-filesystem-example-1.0.5-SNAPSHOT.jar	test-classes
+    
+    localhost:glusterfs-java-filesystem-example fanhongling$ cat target/classes/example.properties 
+    glusterfs.server=192.168.2.19
+    glusterfs.volume=glustervol1
+
+Run example
+
+    localhost:glusterfs-java-filesystem-example fanhongling$ mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+
+__Extension: Working as an Object Storage__
+
+* [Docs](./doc)
+    
+* [Extensions](./glusterfs-plus-os)
+
 # glusterfs-java-filesystem
 
 This project aims to be a complete implementation of a Java7/NIO.2 File System Provider backed by
