@@ -1,0 +1,1241 @@
+localhost:trusty64 fanhongling$ ssh vagrant@172.17.4.200
+vagrant@172.17.4.200's password: 
+Welcome to Ubuntu 14.04.5 LTS (GNU/Linux 3.13.0-76-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Mon Mar  6 02:48:46 UTC 2017
+
+  System load:  0.0                Users logged in:        1
+  Usage of /:   83.8% of 39.34GB   IP address for eth0:    10.0.2.15
+  Memory usage: 58%                IP address for eth1:    172.17.4.200
+  Swap usage:   0%                 IP address for docker0: 172.18.0.1
+  Processes:    96
+
+  Graph this data and manage this system at:
+    https://landscape.canonical.com/
+
+  Get cloud support with Ubuntu Advantage Cloud Guest:
+    http://www.ubuntu.com/business/services/cloud
+
+42 packages can be updated.
+27 updates are security updates.
+
+New release '16.04.2 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Fri Mar  3 06:55:33 2017 from 172.17.4.1
+vagrant@vagrant-ubuntu-trusty-64:~$ ls -a
+.              bin                        .docker                       .helm        .mongorc.js       .ssh
+..             caas.pem                   docker-registry-up.sh         .kube        .packer.d         ssl
+.bash_history  .cache                     etc                           kubeconfig   .profile          .terraform.d
+.bash_logout   dangling-images-action.md  fontconfig.Ubuntu.properties  .kubeconfig  .rnd              .viminfo
+.bashrc        .dbshell                   gke                           .lesshst     rsync-example.md  workspace
+vagrant@vagrant-ubuntu-trusty-64:~$ mkdir .m2
+vagrant@vagrant-ubuntu-trusty-64:~$ cd .m2
+vagrant@vagrant-ubuntu-trusty-64:~/.m2$ ln -s /99-mirror/maven-repo /home/vagrant/.m2/repository
+vagrant@vagrant-ubuntu-trusty-64:~/.m2$ echo $PATH
+/home/vagrant/bin:/usr/local/go/bin:/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/jdk1.8.0_72/bin:/opt/apache-maven-3.3.9/bin
+vagrant@vagrant-ubuntu-trusty-64:~/.m2$ cd /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls
+pom.xml  src  target
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+Downloading: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/glusterfs/glusterfs-java-filesystem/1.0.5-SNAPSHOT/maven-metadata.xml
+Downloaded: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/glusterfs/glusterfs-java-filesystem/1.0.5-SNAPSHOT/maven-metadata.xml (797 B at 0.1 KB/sec)
+Downloading: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/glusterfs/glusterfs-java-filesystem-project/1.0.5-SNAPSHOT/maven-metadata.xml
+Downloaded: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/glusterfs/glusterfs-java-filesystem-project/1.0.5-SNAPSHOT/maven-metadata.xml (632 B at 0.1 KB/sec)
+Downloading: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/libgfapi-jni/libgfapi-all/1.0.5-SNAPSHOT/maven-metadata.xml
+Downloaded: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/libgfapi-jni/libgfapi-all/1.0.5-SNAPSHOT/maven-metadata.xml (787 B at 0.3 KB/sec)
+Downloading: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/libgfapi-jni/libgfapi-project/1.0.5-SNAPSHOT/maven-metadata.xml
+Downloaded: https://oss.sonatype.org/content/repositories/snapshots/com/peircean/libgfapi-jni/libgfapi-project/1.0.5-SNAPSHOT/maven-metadata.xml (618 B at 0.2 KB/sec)
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+Exception in thread "main" java.lang.UnsatisfiedLinkError: Could not load library. Reasons: [no libgfapi-jni64-1.0.5-SNAPSHOT in java.library.path, no libgfapi-jni-1.0.5-SNAPSHOT in java.library.path, no libgfapi-jni in java.library.path, /tmp/liblibgfapi-jni-64-1-463832805035400078.0: libgfapi.so.0: cannot open shared object file: No such file or directory]
+	at org.fusesource.hawtjni.runtime.Library.doLoad(Library.java:182)
+	at org.fusesource.hawtjni.runtime.Library.load(Library.java:140)
+	at com.peircean.libgfapi_jni.internal.GLFS.<clinit>(GLFS.java:52)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.glfsNew(GlusterFileSystemProvider.java:70)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.newFileSystem(GlusterFileSystemProvider.java:43)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.getPath(GlusterFileSystemProvider.java:111)
+	at java.nio.file.Paths.get(Paths.java:143)
+	at com.peircean.glusterfs.example.Example.main(Example.java:43)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 32.248 s
+[INFO] Finished at: 2017-03-06T03:04:58+00:00
+[INFO] Final Memory: 9M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls /tmp
+hsperfdata_ubuntu  hsperfdata_vagrant
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo apt-get install python-software-properties
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  python-software-properties
+0 upgraded, 1 newly installed, 0 to remove and 38 not upgraded.
+Need to get 19.6 kB of archives.
+After this operation, 138 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu/ trusty-updates/universe python-software-properties all 0.92.37.7 [19.6 kB]
+Fetched 19.6 kB in 27s (710 B/s)                      
+Selecting previously unselected package python-software-properties.
+(Reading database ... 66347 files and directories currently installed.)
+Preparing to unpack .../python-software-properties_0.92.37.7_all.deb ...
+Unpacking python-software-properties (0.92.37.7) ...
+Setting up python-software-properties (0.92.37.7) ...
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo apt-get install software-properties-common
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+software-properties-common is already the newest version.
+0 upgraded, 0 newly installed, 0 to remove and 38 not upgraded.
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo add-apt-repository ppa:gluster/glusterfs-3.8
+ 
+ More info: https://launchpad.net/~gluster/+archive/ubuntu/glusterfs-3.8
+Press [ENTER] to continue or ctrl-c to cancel adding it
+
+Error reading https://launchpad.net/api/1.0/~gluster/+archive/glusterfs-3.8: EOF occurred in violation of protocol (_ssl.c:600)
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /etc/apt/
+apt.conf.d/        preferences.d/     sources.list.d/    trusted.gpg        trusted.gpg.d/     
+mirror.list        sources.list       sources.list.save  trusted.gpg~       
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /etc/apt/sources.list
+## Note, this file is written by cloud-init on first boot of an instance
+## modifications made here will not survive a re-bundle.
+## if you wish to make changes you can:
+## a.) add 'apt_preserve_sources_list: true' to /etc/cloud/cloud.cfg
+##     or do the same in user-data
+## b.) add sources in /etc/apt/sources.list.d
+## c.) make changes to template file /etc/cloud/templates/sources.list.tmpl
+#
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://archive.ubuntu.com/ubuntu trusty main restricted
+deb-src http://archive.ubuntu.com/ubuntu trusty main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://archive.ubuntu.com/ubuntu trusty-updates main restricted
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu trusty universe
+deb-src http://archive.ubuntu.com/ubuntu trusty universe
+deb http://archive.ubuntu.com/ubuntu trusty-updates universe
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://archive.ubuntu.com/ubuntu trusty multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty multiverse
+deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+
+## Uncomment the following two lines to add software from the 'backports'
+## repository.
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu trusty partner
+# deb-src http://archive.canonical.com/ubuntu trusty partner
+
+deb http://security.ubuntu.com/ubuntu trusty-security main
+deb-src http://security.ubuntu.com/ubuntu trusty-security main
+deb http://security.ubuntu.com/ubuntu trusty-security universe
+deb-src http://security.ubuntu.com/ubuntu trusty-security universe
+# deb http://security.ubuntu.com/ubuntu trusty-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu trusty-security multiverse
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /etc/apt/sources.list.save 
+## Note, this file is written by cloud-init on first boot of an instance
+## modifications made here will not survive a re-bundle.
+## if you wish to make changes you can:
+## a.) add 'apt_preserve_sources_list: true' to /etc/cloud/cloud.cfg
+##     or do the same in user-data
+## b.) add sources in /etc/apt/sources.list.d
+## c.) make changes to template file /etc/cloud/templates/sources.list.tmpl
+#
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://archive.ubuntu.com/ubuntu trusty main restricted
+deb-src http://archive.ubuntu.com/ubuntu trusty main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://archive.ubuntu.com/ubuntu trusty-updates main restricted
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu trusty universe
+deb-src http://archive.ubuntu.com/ubuntu trusty universe
+deb http://archive.ubuntu.com/ubuntu trusty-updates universe
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://archive.ubuntu.com/ubuntu trusty multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty multiverse
+deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+
+## Uncomment the following two lines to add software from the 'backports'
+## repository.
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu trusty partner
+# deb-src http://archive.canonical.com/ubuntu trusty partner
+
+deb http://security.ubuntu.com/ubuntu trusty-security main
+deb-src http://security.ubuntu.com/ubuntu trusty-security main
+deb http://security.ubuntu.com/ubuntu trusty-security universe
+deb-src http://security.ubuntu.com/ubuntu trusty-security universe
+# deb http://security.ubuntu.com/ubuntu trusty-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu trusty-security multiverse
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /etc/apt/sources.list
+## Note, this file is written by cloud-init on first boot of an instance
+## modifications made here will not survive a re-bundle.
+## if you wish to make changes you can:
+## a.) add 'apt_preserve_sources_list: true' to /etc/cloud/cloud.cfg
+##     or do the same in user-data
+## b.) add sources in /etc/apt/sources.list.d
+## c.) make changes to template file /etc/cloud/templates/sources.list.tmpl
+#
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://archive.ubuntu.com/ubuntu trusty main restricted
+deb-src http://archive.ubuntu.com/ubuntu trusty main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://archive.ubuntu.com/ubuntu trusty-updates main restricted
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu trusty universe
+deb-src http://archive.ubuntu.com/ubuntu trusty universe
+deb http://archive.ubuntu.com/ubuntu trusty-updates universe
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://archive.ubuntu.com/ubuntu trusty multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty multiverse
+deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+
+## Uncomment the following two lines to add software from the 'backports'
+## repository.
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu trusty partner
+# deb-src http://archive.canonical.com/ubuntu trusty partner
+
+deb http://security.ubuntu.com/ubuntu trusty-security main
+deb-src http://security.ubuntu.com/ubuntu trusty-security main
+deb http://security.ubuntu.com/ubuntu trusty-security universe
+deb-src http://security.ubuntu.com/ubuntu trusty-security universe
+# deb http://security.ubuntu.com/ubuntu trusty-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu trusty-security multiverse
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ diff /etc/apt/sources.list /etc/apt/sources.list.save 
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo sed -i '/archive.ubuntu.com/mirrors.aliyun.com/g;/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+sed: -e expression #1, char 21: unknown command: `m'
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g;s/security.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /etc/apt/sources.list
+## Note, this file is written by cloud-init on first boot of an instance
+## modifications made here will not survive a re-bundle.
+## if you wish to make changes you can:
+## a.) add 'apt_preserve_sources_list: true' to /etc/cloud/cloud.cfg
+##     or do the same in user-data
+## b.) add sources in /etc/apt/sources.list.d
+## c.) make changes to template file /etc/cloud/templates/sources.list.tmpl
+#
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://mirrors.aliyun.com/ubuntu trusty main restricted
+deb-src http://mirrors.aliyun.com/ubuntu trusty main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://mirrors.aliyun.com/ubuntu trusty-updates main restricted
+deb-src http://mirrors.aliyun.com/ubuntu trusty-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://mirrors.aliyun.com/ubuntu trusty universe
+deb-src http://mirrors.aliyun.com/ubuntu trusty universe
+deb http://mirrors.aliyun.com/ubuntu trusty-updates universe
+deb-src http://mirrors.aliyun.com/ubuntu trusty-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu 
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in 
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://mirrors.aliyun.com/ubuntu trusty multiverse
+deb-src http://mirrors.aliyun.com/ubuntu trusty multiverse
+deb http://mirrors.aliyun.com/ubuntu trusty-updates multiverse
+deb-src http://mirrors.aliyun.com/ubuntu trusty-updates multiverse
+
+## Uncomment the following two lines to add software from the 'backports'
+## repository.
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://mirrors.aliyun.com/ubuntu trusty-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu trusty-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu trusty partner
+# deb-src http://archive.canonical.com/ubuntu trusty partner
+
+deb http://mirrors.aliyun.com/ubuntu trusty-security main
+deb-src http://mirrors.aliyun.com/ubuntu trusty-security main
+deb http://mirrors.aliyun.com/ubuntu trusty-security universe
+deb-src http://mirrors.aliyun.com/ubuntu trusty-security universe
+# deb http://mirrors.aliyun.com/ubuntu trusty-security multiverse
+# deb-src http://mirrors.aliyun.com/ubuntu trusty-security multiverse
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /etc/apt/
+apt.conf.d/        preferences.d/     sources.list.d/    trusted.gpg        trusted.gpg.d/     
+mirror.list        sources.list       sources.list.save  trusted.gpg~       
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /etc/apt/sources.list.d/
+docker.list                        gluster-glusterfs-3_8-trusty.list  mongodb-org-3.2.list.save
+docker.list.save                   mongodb-org-3.2.list               
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo add-apt-repository ppa:gluster/glusterfs-3.8
+ 
+ More info: https://launchpad.net/~gluster/+archive/ubuntu/glusterfs-3.8
+Press [ENTER] to continue or ctrl-c to cancel adding it
+
+gpg: keyring `/tmp/tmpg2e6p8w_/secring.gpg' created
+gpg: keyring `/tmp/tmpg2e6p8w_/pubring.gpg' created
+gpg: requesting key 3FE869A9 from hkp server keyserver.ubuntu.com
+gpg: /tmp/tmpg2e6p8w_/trustdb.gpg: trustdb created
+gpg: key 3FE869A9: public key "Launchpad PPA for Gluster" imported
+gpg: Total number processed: 1
+gpg:               imported: 1  (RSA: 1)
+OK
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo apt-get update
+Ign http://mirrors.aliyun.com trusty InRelease                                 
+Get:1 http://mirrors.aliyun.com trusty-updates InRelease [65.9 kB]             
+Ign http://repo.mongodb.org trusty/mongodb-org/3.2 InRelease                   
+Hit https://apt.dockerproject.org ubuntu-trusty InRelease                      
+Hit https://apt.dockerproject.org ubuntu-trusty/main amd64 Packages            
+Get:2 http://ppa.launchpad.net trusty InRelease [21.4 kB]                      
+Get:3 https://apt.dockerproject.org ubuntu-trusty/main Translation-en_US       
+Get:4 http://mirrors.aliyun.com trusty-backports InRelease [65.9 kB]           
+Hit http://repo.mongodb.org trusty/mongodb-org/3.2 Release.gpg                 
+Hit http://repo.mongodb.org trusty/mongodb-org/3.2 Release                     
+Ign https://apt.dockerproject.org ubuntu-trusty/main Translation-en_US         
+Get:5 http://mirrors.aliyun.com trusty-security InRelease [65.9 kB]            
+Hit http://repo.mongodb.org trusty/mongodb-org/3.2/multiverse amd64 Packages   
+Ign https://apt.dockerproject.org ubuntu-trusty/main Translation-en            
+Get:6 http://mirrors.aliyun.com trusty Release.gpg [933 B]                     
+Get:7 http://mirrors.aliyun.com trusty-updates/main Sources [393 kB]  
+Ign http://repo.mongodb.org trusty/mongodb-org/3.2/multiverse Translation-en_US
+Ign http://repo.mongodb.org trusty/mongodb-org/3.2/multiverse Translation-en   
+Get:8 http://mirrors.aliyun.com trusty-updates/restricted Sources [5,911 B]    
+Get:9 http://mirrors.aliyun.com trusty-updates/universe Sources [175 kB]       
+Get:10 http://mirrors.aliyun.com trusty-updates/multiverse Sources [7,510 B]   
+Get:11 http://mirrors.aliyun.com trusty-updates/main amd64 Packages [956 kB]   
+Get:12 http://mirrors.aliyun.com trusty-updates/restricted amd64 Packages [16.4 kB]
+Get:13 http://mirrors.aliyun.com trusty-updates/universe amd64 Packages [399 kB]
+Get:14 http://mirrors.aliyun.com trusty-updates/multiverse amd64 Packages [14.0 kB]
+Get:15 http://mirrors.aliyun.com trusty-updates/main Translation-en [470 kB]   
+Get:16 http://mirrors.aliyun.com trusty-updates/multiverse Translation-en [7,340 B]
+Get:17 http://mirrors.aliyun.com trusty-updates/restricted Translation-en [3,847 B]
+Get:18 http://mirrors.aliyun.com trusty-updates/universe Translation-en [212 kB]
+Get:19 http://mirrors.aliyun.com trusty-backports/main Sources [9,712 B]       
+Get:20 http://mirrors.aliyun.com trusty-backports/restricted Sources [28 B]    
+Get:21 http://mirrors.aliyun.com trusty-backports/universe Sources [35.3 kB]   
+Get:22 http://mirrors.aliyun.com trusty-backports/multiverse Sources [1,898 B] 
+Get:23 http://mirrors.aliyun.com trusty-backports/main amd64 Packages [13.3 kB]
+Get:24 http://mirrors.aliyun.com trusty-backports/restricted amd64 Packages [28 B]
+Get:25 http://mirrors.aliyun.com trusty-backports/universe amd64 Packages [43.2 kB]
+Get:26 http://mirrors.aliyun.com trusty-backports/multiverse amd64 Packages [1,571 B]
+Get:27 http://mirrors.aliyun.com trusty-backports/main Translation-en [7,503 B]
+Get:28 http://mirrors.aliyun.com trusty-backports/multiverse Translation-en [1,215 B]
+Get:29 http://mirrors.aliyun.com trusty-backports/restricted Translation-en [28 B]
+Get:30 http://mirrors.aliyun.com trusty-backports/universe Translation-en [36.8 kB]
+Get:31 http://mirrors.aliyun.com trusty-security/main Sources [126 kB]         
+Get:32 http://mirrors.aliyun.com trusty-security/universe Sources [49.9 kB]    
+Get:33 http://mirrors.aliyun.com trusty-security/main amd64 Packages [589 kB]  
+Get:34 http://mirrors.aliyun.com trusty-security/universe amd64 Packages [154 kB]
+Get:35 http://mirrors.aliyun.com trusty-security/main Translation-en [322 kB]  
+Get:36 http://mirrors.aliyun.com trusty-security/universe Translation-en [89.9 kB]
+Get:37 http://mirrors.aliyun.com trusty Release [58.5 kB]                      
+Get:38 http://mirrors.aliyun.com trusty/main Sources [1,064 kB]                
+Get:39 http://mirrors.aliyun.com trusty/restricted Sources [5,433 B]           
+Get:40 http://mirrors.aliyun.com trusty/universe Sources [6,399 kB]            
+Get:41 http://ppa.launchpad.net trusty/main Translation-en [1,070 B]           
+Get:42 http://ppa.launchpad.net trusty/main amd64 Packages [1,223 B]           
+Get:43 http://mirrors.aliyun.com trusty/multiverse Sources [174 kB]            
+Get:44 http://mirrors.aliyun.com trusty/main amd64 Packages [1,350 kB]         
+Get:45 http://mirrors.aliyun.com trusty/restricted amd64 Packages [13.0 kB]    
+Get:46 http://mirrors.aliyun.com trusty/universe amd64 Packages [5,859 kB]     
+Get:47 http://mirrors.aliyun.com trusty/multiverse amd64 Packages [132 kB]     
+Get:48 http://mirrors.aliyun.com trusty/main Translation-en [762 kB]           
+Get:49 http://mirrors.aliyun.com trusty/multiverse Translation-en [102 kB]     
+Get:50 http://mirrors.aliyun.com trusty/restricted Translation-en [3,457 B]    
+Get:51 http://mirrors.aliyun.com trusty/universe Translation-en [4,089 kB]     
+Ign http://mirrors.aliyun.com trusty/main Translation-en_US                    
+Ign http://mirrors.aliyun.com trusty/multiverse Translation-en_US
+Ign http://mirrors.aliyun.com trusty/restricted Translation-en_US
+Ign http://mirrors.aliyun.com trusty/universe Translation-en_US
+Fetched 24.4 MB in 15min 53s (25.6 kB/s)
+Reading package lists... Done
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo apt-cache search glusterfs
+glusterfs-client - clustered file-system (client package)
+glusterfs-dbg - GlusterFS debugging symbols
+glusterfs-server - clustered file-system (server package)
+glusterfs-common - GlusterFS common libraries and translator modules
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo apt-et install -y glusterfs-common
+sudo: apt-et: command not found
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo apt-get install -y glusterfs-common
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following extra packages will be installed:
+  attr libaio1 libdevmapper-event1.02.1 libibverbs1 liblvm2app2.2 librdmacm1
+  liburcu1
+The following NEW packages will be installed:
+  attr glusterfs-common libaio1 libdevmapper-event1.02.1 libibverbs1
+  liblvm2app2.2 librdmacm1 liburcu1
+0 upgraded, 8 newly installed, 0 to remove and 38 not upgraded.
+Need to get 3,267 kB of archives.
+After this operation, 15.6 MB of additional disk space will be used.
+Get:1 http://mirrors.aliyun.com/ubuntu/ trusty/main libaio1 amd64 0.3.109-4 [6,364 B]
+Get:2 http://mirrors.aliyun.com/ubuntu/ trusty-updates/main libibverbs1 amd64 1.1.7-1ubuntu1.1 [23.6 kB]
+Get:3 http://mirrors.aliyun.com/ubuntu/ trusty/main libdevmapper-event1.02.1 amd64 2:1.02.77-6ubuntu2 [10.8 kB]
+Get:4 http://mirrors.aliyun.com/ubuntu/ trusty/main liblvm2app2.2 amd64 2.02.98-6ubuntu2 [243 kB]
+Get:5 http://ppa.launchpad.net/gluster/glusterfs-3.8/ubuntu/ trusty/main glusterfs-common amd64 3.8.9-ubuntu1~trusty1 [2,882 kB]
+Get:6 http://mirrors.aliyun.com/ubuntu/ trusty/main librdmacm1 amd64 1.0.16-1 [36.8 kB]
+Get:7 http://mirrors.aliyun.com/ubuntu/ trusty/main liburcu1 amd64 0.7.12-0ubuntu2 [34.9 kB]
+Get:8 http://mirrors.aliyun.com/ubuntu/ trusty/main attr amd64 1:2.4.47-1ubuntu1 [29.3 kB]
+Fetched 3,267 kB in 57s (57.0 kB/s)                                            
+Selecting previously unselected package libaio1:amd64.
+(Reading database ... 66363 files and directories currently installed.)
+Preparing to unpack .../libaio1_0.3.109-4_amd64.deb ...
+Unpacking libaio1:amd64 (0.3.109-4) ...
+Selecting previously unselected package libibverbs1.
+Preparing to unpack .../libibverbs1_1.1.7-1ubuntu1.1_amd64.deb ...
+Unpacking libibverbs1 (1.1.7-1ubuntu1.1) ...
+Selecting previously unselected package libdevmapper-event1.02.1:amd64.
+Preparing to unpack .../libdevmapper-event1.02.1_2%3a1.02.77-6ubuntu2_amd64.deb ...
+Unpacking libdevmapper-event1.02.1:amd64 (2:1.02.77-6ubuntu2) ...
+Selecting previously unselected package liblvm2app2.2:amd64.
+Preparing to unpack .../liblvm2app2.2_2.02.98-6ubuntu2_amd64.deb ...
+Unpacking liblvm2app2.2:amd64 (2.02.98-6ubuntu2) ...
+Selecting previously unselected package librdmacm1.
+Preparing to unpack .../librdmacm1_1.0.16-1_amd64.deb ...
+Unpacking librdmacm1 (1.0.16-1) ...
+Selecting previously unselected package liburcu1.
+Preparing to unpack .../liburcu1_0.7.12-0ubuntu2_amd64.deb ...
+Unpacking liburcu1 (0.7.12-0ubuntu2) ...
+Selecting previously unselected package attr.
+Preparing to unpack .../attr_1%3a2.4.47-1ubuntu1_amd64.deb ...
+Unpacking attr (1:2.4.47-1ubuntu1) ...
+Selecting previously unselected package glusterfs-common.
+Preparing to unpack .../glusterfs-common_3.8.9-ubuntu1~trusty1_amd64.deb ...
+Unpacking glusterfs-common (3.8.9-ubuntu1~trusty1) ...
+Processing triggers for man-db (2.6.7.1-1ubuntu1) ...
+Setting up libaio1:amd64 (0.3.109-4) ...
+Setting up libibverbs1 (1.1.7-1ubuntu1.1) ...
+Setting up libdevmapper-event1.02.1:amd64 (2:1.02.77-6ubuntu2) ...
+Setting up liblvm2app2.2:amd64 (2.02.98-6ubuntu2) ...
+Setting up librdmacm1 (1.0.16-1) ...
+Setting up liburcu1 (0.7.12-0ubuntu2) ...
+Setting up attr (1:2.4.47-1ubuntu1) ...
+Setting up glusterfs-common (3.8.9-ubuntu1~trusty1) ...
+Processing triggers for libc-bin (2.19-0ubuntu6.9) ...
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738973696
+UNALLOCATED SPACE: 4738973696
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+Exception in thread "main" java.nio.file.NoSuchFileException: 
+	at com.peircean.glusterfs.GlusterFileSystemProvider.readAttributes(GlusterFileSystemProvider.java:431)
+	at java.nio.file.Files.readAttributes(Files.java:1737)
+	at java.nio.file.Files.getLastModifiedTime(Files.java:2266)
+	at com.peircean.glusterfs.example.Example.main(Example.java:72)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.711 s
+[INFO] Finished at: 2017-03-06T03:36:44+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738973696
+UNALLOCATED SPACE: 4738973696
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+Exception in thread "main" java.nio.file.NoSuchFileException: 
+	at com.peircean.glusterfs.GlusterFileSystemProvider.readAttributes(GlusterFileSystemProvider.java:431)
+	at java.nio.file.Files.readAttributes(Files.java:1737)
+	at java.nio.file.Files.getLastModifiedTime(Files.java:2266)
+	at com.peircean.glusterfs.example.Example.main(Example.java:72)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.592 s
+[INFO] Finished at: 2017-03-06T03:48:47+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo apt-get install -y glusterfs-client
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following NEW packages will be installed:
+  glusterfs-client
+0 upgraded, 1 newly installed, 0 to remove and 38 not upgraded.
+Need to get 19.5 kB of archives.
+After this operation, 84.0 kB of additional disk space will be used.
+Get:1 http://ppa.launchpad.net/gluster/glusterfs-3.8/ubuntu/ trusty/main glusterfs-client amd64 3.8.9-ubuntu1~trusty1 [19.5 kB]
+Fetched 19.5 kB in 4s (4,017 B/s)           
+Selecting previously unselected package glusterfs-client.
+(Reading database ... 66796 files and directories currently installed.)
+Preparing to unpack .../glusterfs-client_3.8.9-ubuntu1~trusty1_amd64.deb ...
+Unpacking glusterfs-client (3.8.9-ubuntu1~trusty1) ...
+Processing triggers for ureadahead (0.100.0-16) ...
+Processing triggers for man-db (2.6.7.1-1ubuntu1) ...
+Setting up glusterfs-client (3.8.9-ubuntu1~trusty1) ...
+Processing triggers for ureadahead (0.100.0-16) ...
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls
+pom.xml  src  target
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cd /tmp
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ ls
+hsperfdata_ubuntu  hsperfdata_vagrant
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ mkdir mnt
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ mount -t glusterfs 192.168.2.19:/glustervol1 /tmp/mnt
+mount: only root can do that
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ sudo mount -t glusterfs 192.168.2.19:/glustervol1 /tmp/mnt
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ ls mnt
+github.com  test1  test2  test3
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ sudo umount /tmp/mnt
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ ls mnt
+vagrant@vagrant-ubuntu-trusty-64:/tmp$ cd /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls
+pom.xml  src  target
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ mvn package -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ glusterfs-java-filesystem-example ---
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ glusterfs-java-filesystem-example ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ glusterfs-java-filesystem-example ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ glusterfs-java-filesystem-example ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ glusterfs-java-filesystem-example ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.16:test (default-test) @ glusterfs-java-filesystem-example ---
+[INFO] Surefire report directory: /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running ExampleTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.163 sec - in ExampleTest
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ glusterfs-java-filesystem-example ---
+[INFO] Building jar: /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example/target/glusterfs-java-filesystem-example-1.0.5-SNAPSHOT.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 10.445 s
+[INFO] Finished at: 2017-03-06T03:53:34+00:00
+[INFO] Final Memory: 16M/46M
+[INFO] ------------------------------------------------------------------------
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738973696
+UNALLOCATED SPACE: 4738973696
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+Exception in thread "main" java.io.IOException: Unable to create or open file '/baz' on volume 'gluster://192.168.2.19:glustervol1'
+	at com.peircean.glusterfs.GlusterFileChannel.init(GlusterFileChannel.java:86)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.newFileChannelHelper(GlusterFileSystemProvider.java:129)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.newByteChannel(GlusterFileSystemProvider.java:119)
+	at java.nio.file.spi.FileSystemProvider.newOutputStream(FileSystemProvider.java:434)
+	at java.nio.file.Files.newOutputStream(Files.java:216)
+	at java.nio.file.Files.write(Files.java:3292)
+	at com.peircean.glusterfs.example.Example.main(Example.java:76)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.565 s
+[INFO] Finished at: 2017-03-06T03:53:49+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ mount -t glusterfs 192.168.2.19:/glustervol1 /tmp/mnt
+mount: only root can do that
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo mount -t glusterfs 192.168.2.19:/glustervol1 /tmp/mnt
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls /tmp/mnt
+github.com  test1  test2  test3
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp/mnt
+total 6
+drwxr-xr-x 3 root root 4096 Mar  2 07:09 github.com
+-rw-r--r-- 1 root root   50 Feb 28 07:04 test1
+-rw-r--r-- 1 root root   85 Feb 28 07:00 test2
+-rw-r--r-- 1 root root   85 Feb 28 07:30 test3
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp
+total 12
+drwxr-xr-x 2 ubuntu  ubuntu  4096 Mar  6 02:59 hsperfdata_ubuntu
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6 03:53 hsperfdata_vagrant
+drwxr-xr-x 5 root    root    4096 Mar  2 07:09 mnt
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo umount /tmp/mnt 
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo chmod g+w,o+w /tmp/mnt
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /mnt
+total 0
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp/
+total 12
+drwxr-xr-x 2 ubuntu  ubuntu  4096 Mar  6 02:59 hsperfdata_ubuntu
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6 03:53 hsperfdata_vagrant
+drwxrwxrwx 2 vagrant vagrant 4096 Mar  6 03:49 mnt
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo mount -t glusterfs 192.168.2.19:/glustervol1 /tmp/mnt
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp/
+total 12
+drwxr-xr-x 2 ubuntu  ubuntu  4096 Mar  6 02:59 hsperfdata_ubuntu
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6 03:53 hsperfdata_vagrant
+drwxr-xr-x 5 root    root    4096 Mar  2 07:09 mnt
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp/mnt
+total 6
+drwxr-xr-x 3 root root 4096 Mar  2 07:09 github.com
+-rw-r--r-- 1 root root   50 Feb 28 07:04 test1
+-rw-r--r-- 1 root root   85 Feb 28 07:00 test2
+-rw-r--r-- 1 root root   85 Feb 28 07:30 test3
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo chown -R vagrant: /tmp/mnt/test1
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp/mnt/
+total 6
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 root    root      85 Feb 28 07:00 test2
+-rw-r--r-- 1 root    root      85 Feb 28 07:30 test3
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo chown -R vagrant: /tmp/mnt/test*
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp/mnt/
+total 6
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:30 test3
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ vi /tmp/mnt/baz
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo vi /tmp/mnt/baz
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo chown -R vagrant: /tmp/mnt/baz 
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls -l /tmp/mnt/
+total 54
+-rw-r--r-- 1 vagrant vagrant 49532 Mar  6  2017 baz
+drwxr-xr-x 3 root    root     4096 Mar  2 07:09 github.com
+-rw-r--r-- 1 vagrant vagrant    50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant    85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant    85 Feb 28 07:30 test3
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738920448
+UNALLOCATED SPACE: 4738920448
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+SIZE: 13
+Hello, world! == Hello, world!
+Last modified: 2017-03-06T04:16:41Z (should be now)
+Can read & write file
+Can't execute file, that's good.
+Exception in thread "main" java.io.IOException: Unknown error creating symlink: /symlink
+	at com.peircean.glusterfs.GlusterFileSystemProvider.createSymbolicLink(GlusterFileSystemProvider.java:485)
+	at java.nio.file.Files.createSymbolicLink(Files.java:1043)
+	at com.peircean.glusterfs.example.Example.main(Example.java:95)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.665 s
+[INFO] Finished at: 2017-03-06T04:04:53+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ ls /tmp/mnt/
+baz  github.com  test1  test2  test3
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ cat /tmp/mnt/baz 
+Hello, world!vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ 
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo ls -a /root
+.  ..  .bash_history  .bashrc  .profile  .ssh
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo mkdir -p /root/.m2
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo ln -s /99-mirror/maven-repo /root/.m2/repository
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo -s
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+The program 'mvn' can be found in the following packages:
+ * maven
+ * maven2
+Try: apt-get install <selected package>
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# /opt/apache-maven-3.3.9/bin/mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+Error: JAVA_HOME is not defined correctly.
+  We cannot execute 
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# exit
+exit
+vagrant@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example$ sudo -i
+root@vagrant-ubuntu-trusty-64:~# echo $JAVA_HOME
+
+root@vagrant-ubuntu-trusty-64:~# ls /opt/jdk1.8.0_72/
+bin        db       javafx-src.zip  lib      man          release  THIRDPARTYLICENSEREADME-JAVAFX.txt
+COPYRIGHT  include  jre             LICENSE  README.html  src.zip  THIRDPARTYLICENSEREADME.txt
+root@vagrant-ubuntu-trusty-64:~# vi /etc/profile
+root@vagrant-ubuntu-trusty-64:~# export JAVA_HOME=/opt/jdk1.8.0_72/
+root@vagrant-ubuntu-trusty-64:~# export JAVA_HOME=/opt/jdk1.8.0_72
+root@vagrant-ubuntu-trusty-64:~# vi /etc/profile
+root@vagrant-ubuntu-trusty-64:~# echo $PATH
+/usr/local/go/bin:/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/jdk1.8.0_72/bin:/opt/apache-maven-3.3.9/bin
+root@vagrant-ubuntu-trusty-64:~# cd /work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738969600
+UNALLOCATED SPACE: 4738969600
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+SIZE: 13
+Hello, world! == Hello, world!
+Last modified: 2017-03-06T04:48:02Z (should be now)
+Can read & write file
+Uh oh, file is executable, that's bad.
+SYMLINK: /symlink => /symlinktarget
+Source and copy are  equal.
+Can't list directory of a file, good.
+Mount contents:
+/test1
+Mount contents:
+Mount contents:
+/.trashcan
+/test2
+/test1
+/test3
+/github.com
+/baz
+ **** MATCH ****
+/symlink
+/copy
+Mount contents:
+/baz
+STARTSWITH empty: true
+Exception in thread "main" java.nio.file.NotDirectoryException: GlusterWatchService can only watch directories.  Not a directory: /one
+	at com.peircean.glusterfs.GlusterPath.guardRegisterWatchDirectory(GlusterPath.java:288)
+	at com.peircean.glusterfs.GlusterPath.register(GlusterPath.java:281)
+	at com.peircean.glusterfs.example.Example.main(Example.java:157)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.660 s
+[INFO] Finished at: 2017-03-06T04:36:14+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# ls
+pom.xml  src  target
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../README.md
+	modified:   pom.xml
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	../docs/
+	../os-ext/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mkdir /tmp/mnt/
+github.com/ .trashcan/  
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mkdir -p /tmp/mnt/one
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# shown vagrant: /tmp/mnt/one
+No command 'shown' found, did you mean:
+ Command 'showg' from package 'nauty' (multiverse)
+ Command 'showq' from package 'showq' (universe)
+ Command 'chown' from package 'coreutils' (main)
+ Command 'show' from package 'nmh' (universe)
+shown: command not found
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# chown vagrant: /tmp/mnt/one
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738932736
+UNALLOCATED SPACE: 4738932736
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+SIZE: 13
+Hello, world! == Hello, world!
+Last modified: 2017-03-06T04:57:36Z (should be now)
+Can read & write file
+Uh oh, file is executable, that's bad.
+Exception in thread "main" java.nio.file.FileAlreadyExistsException: /symlink
+	at com.peircean.glusterfs.GlusterFileSystemProvider.createSymbolicLink(GlusterFileSystemProvider.java:476)
+	at java.nio.file.Files.createSymbolicLink(Files.java:1043)
+	at com.peircean.glusterfs.example.Example.main(Example.java:95)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.557 s
+[INFO] Finished at: 2017-03-06T04:45:48+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# ls -l /tmp/mnt
+total 11
+-rw-r--r-- 1 vagrant vagrant   13 Mar  6  2017 baz
+-rw-rw-r-- 1 root    root      13 Mar  6  2017 copy
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6  2017 one
+lrwxrwxrwx 1 root    root      14 Mar  6  2017 symlink -> /symlinktarget
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:30 test3
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# rm /tmp/mnt/symlink 
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738932736
+UNALLOCATED SPACE: 4738932736
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+SIZE: 13
+Hello, world! == Hello, world!
+Last modified: 2017-03-06T04:58:41Z (should be now)
+Can read & write file
+Uh oh, file is executable, that's bad.
+SYMLINK: /symlink => /symlinktarget
+Exception in thread "main" java.nio.file.FileAlreadyExistsException: /copy
+	at com.peircean.glusterfs.GlusterFileChannel.init(GlusterFileChannel.java:78)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.newFileChannelHelper(GlusterFileSystemProvider.java:129)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.newByteChannel(GlusterFileSystemProvider.java:119)
+	at java.nio.file.Files.newByteChannel(Files.java:361)
+	at java.nio.file.Files.createFile(Files.java:632)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.copy(GlusterFileSystemProvider.java:227)
+	at java.nio.file.Files.copy(Files.java:1274)
+	at com.peircean.glusterfs.example.Example.main(Example.java:100)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.568 s
+[INFO] Finished at: 2017-03-06T04:46:53+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# ls -l /tmp/mnt
+total 11
+-rw-r--r-- 1 vagrant vagrant   13 Mar  6  2017 baz
+-rw-rw-r-- 1 root    root      13 Mar  6  2017 copy
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6  2017 one
+lrwxrwxrwx 1 root    root      14 Mar  6  2017 symlink -> /symlinktarget
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:30 test3
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mkdir -p /tmp/mnt/symlinktarget
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# ls -l /tmp/mnt
+total 15
+-rw-r--r-- 1 vagrant vagrant   13 Mar  6  2017 baz
+-rw-rw-r-- 1 root    root      13 Mar  6  2017 copy
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6  2017 one
+lrwxrwxrwx 1 root    root      14 Mar  6  2017 symlink -> /symlinktarget
+drwxr-xr-x 2 root    root    4096 Mar  6  2017 symlinktarget
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:30 test3
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# rmdir /tmp/mnt/symlinktarget
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# ls -l /tmp/mnt
+total 11
+-rw-r--r-- 1 vagrant vagrant   13 Mar  6  2017 baz
+-rw-rw-r-- 1 root    root      13 Mar  6 04:48 copy
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6  2017 one
+lrwxrwxrwx 1 root    root      14 Mar  6  2017 symlink -> /symlinktarget
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:30 test3
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mkdir /symlinktarget
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# ls -l /tmp/mnt
+total 11
+-rw-r--r-- 1 vagrant vagrant   13 Mar  6  2017 baz
+-rw-rw-r-- 1 root    root      13 Mar  6 04:48 copy
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6  2017 one
+lrwxrwxrwx 1 root    root      14 Mar  6  2017 symlink -> /symlinktarget
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:30 test3
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# rm /tmp/mnt/symlink
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738932736
+UNALLOCATED SPACE: 4738932736
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+SIZE: 13
+Hello, world! == Hello, world!
+Last modified: 2017-03-06T05:00:36Z (should be now)
+Can read & write file
+Uh oh, file is executable, that's bad.
+SYMLINK: /symlink => /symlinktarget
+Exception in thread "main" java.nio.file.FileAlreadyExistsException: /copy
+	at com.peircean.glusterfs.GlusterFileChannel.init(GlusterFileChannel.java:78)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.newFileChannelHelper(GlusterFileSystemProvider.java:129)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.newByteChannel(GlusterFileSystemProvider.java:119)
+	at java.nio.file.Files.newByteChannel(Files.java:361)
+	at java.nio.file.Files.createFile(Files.java:632)
+	at com.peircean.glusterfs.GlusterFileSystemProvider.copy(GlusterFileSystemProvider.java:227)
+	at java.nio.file.Files.copy(Files.java:1274)
+	at com.peircean.glusterfs.example.Example.main(Example.java:100)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 3.295 s
+[INFO] Finished at: 2017-03-06T04:48:49+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# ls -l /tmp/mnt
+total 11
+-rw-r--r-- 1 vagrant vagrant   13 Mar  6  2017 baz
+-rw-rw-r-- 1 root    root      13 Mar  6 04:48 copy
+drwxr-xr-x 3 root    root    4096 Mar  2 07:09 github.com
+drwxr-xr-x 2 vagrant vagrant 4096 Mar  6  2017 one
+lrwxrwxrwx 1 root    root      14 Mar  6  2017 symlink -> /symlinktarget
+-rw-r--r-- 1 vagrant vagrant   50 Feb 28 07:04 test1
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:00 test2
+-rw-r--r-- 1 vagrant vagrant   85 Feb 28 07:30 test3
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# rm /tmp/mnt/copy
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738936832
+UNALLOCATED SPACE: 4738936832
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+SIZE: 13
+Hello, world! == Hello, world!
+Last modified: 2017-03-06T05:01:24Z (should be now)
+Can read & write file
+Uh oh, file is executable, that's bad.
+Exception in thread "main" java.nio.file.FileAlreadyExistsException: /symlink
+	at com.peircean.glusterfs.GlusterFileSystemProvider.createSymbolicLink(GlusterFileSystemProvider.java:476)
+	at java.nio.file.Files.createSymbolicLink(Files.java:1043)
+	at com.peircean.glusterfs.example.Example.main(Example.java:95)
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.633 s
+[INFO] Finished at: 2017-03-06T04:49:37+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:exec-maven-plugin:1.2.1:exec (default-cli) on project glusterfs-java-filesystem-example: Command execution failed. Process exited with an error: 1 (Exit value: 1) -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# rm /tmp/mnt/copy
+rm: cannot remove ‘/tmp/mnt/copy’: No such file or directory
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# rm /tmp/mnt/symlink
+root@vagrant-ubuntu-trusty-64:/work/src/github.com/gluster/gluster-java-filesystem/glusterfs-java-filesystem-example# mvn exec:exec -Dglusterfs.server=192.168.2.19 -Dglusterfs.volume=glustervol1
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building glusterfs-java-filesystem-example 1.0.5-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.2.1:exec (default-cli) @ glusterfs-java-filesystem-example ---
+com.peircean.glusterfs.GlusterFileSystemProvider@5cad8086
+TOTAL SPACE: 5358223360
+USABLE SPACE: 4738936832
+UNALLOCATED SPACE: 4738936832
+gluster://192.168.2.19:glustervol1
+Is /foo/.bar hidden? true
+Is /foo/bar hidden? false
+class com.peircean.glusterfs.GlusterPath
+/baz
+gluster://192.168.2.19:glustervol1
+File exists, created at gluster://192.168.2.19:glustervol1/baz
+SIZE: 13
+Hello, world! == Hello, world!
+Last modified: 2017-03-06T05:01:43Z (should be now)
+Can read & write file
+Uh oh, file is executable, that's bad.
+SYMLINK: /symlink => /symlinktarget
+Source and copy are  equal.
+Can't list directory of a file, good.
+Mount contents:
+/test1
+Mount contents:
+Mount contents:
+/.trashcan
+/test2
+/test1
+/test3
+/github.com
+/baz
+ **** MATCH ****
+/one
+/symlink
+/copy
+Mount contents:
+/baz
+STARTSWITH empty: true
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 16.120 s
+[INFO] Finished at: 2017-03-06T04:50:09+00:00
+[INFO] Final Memory: 7M/46M
+[INFO] ------------------------------------------------------------------------

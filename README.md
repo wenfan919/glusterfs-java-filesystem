@@ -1,4 +1,4 @@
-# Working at glusterfs extension for object storage
+# Working at glusterfs extension for object storage and cloud drive
 
 Fork
 
@@ -66,9 +66,9 @@ Run example
 
 __Extension: Working as an Object Storage__
 
-* [Docs](./doc)
+* [Docs](./docs)
     
-* [Extensions](./glusterfs-plus-os)
+* [OS Extensions](./os-ext)
 
 # glusterfs-java-filesystem
 
