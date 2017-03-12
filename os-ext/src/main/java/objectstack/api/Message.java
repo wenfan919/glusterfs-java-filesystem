@@ -1,9 +1,5 @@
 package objectstack.api;
 
-/**
- * Created by tangfeixiong on 3/6/17.
- */
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -11,7 +7,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import java.util.Calendar;
 
 /**
- *
+ * Created by tangfeixiong on 3/6/17.
+ * https://github.com/tangfeixiong/osev3-examples/tree/master/spring-boot/sample-microservices-springboot/repositories-mem
  */
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)

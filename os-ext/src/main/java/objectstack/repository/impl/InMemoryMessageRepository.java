@@ -1,12 +1,10 @@
 package objectstack.repository.impl;
 
-/**
- * Created by tangfeixiong (tangfx128@gmail.com) on 3/6/17.
- */
 import objectstack.api.Message;
-import objectstack.api.Repository;
+import objectstack.api.MessageRepository;
 
-import java.nio.file.spi.FileSystemProvider;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +13,10 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @author TangFeiXiong
+ * Created by tangfeixiong on 3/12/17.
+ * https://github.com/tangfeixiong/osev3-examples/tree/master/spring-boot/sample-microservices-springboot/repositories-mem
  */
-public class GlusterfsRepository implements Repository {
-
-    public static FileSystemProvider getProvider(String scheme) {
-        for (FileSystemProvider fsp : FileSystemProvider.installedProviders()) {
-            if (fsp.getScheme().equals(scheme)) {
-                return fsp;
-            }
-        }
-        throw new IllegalArgumentException("No provider found for scheme: " + scheme);
-    }
+public class InMemoryMessageRepository implements MessageRepository {
 
     private static AtomicLong counter = new AtomicLong();
 
@@ -68,5 +58,35 @@ public class GlusterfsRepository implements Repository {
         System.out.println("InMemoryMessageRepository.delete: " + id);
         messages.remove(id);
     }
+    
+    /*
+     * https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-web-mustache
+     */
+	@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+	private static class ServiceUnavailableException extends RuntimeException {
 
+	}
+
+	@ResponseStatus(HttpStatus.INSUFFICIENT_STORAGE)
+	private static class InsufficientStorageException extends RuntimeException {
+
+	}
+
+    /*
+     * https://github.com/spring-projects/spring-boot/blob/master/spring-boot-samples/spring-boot-sample-web-ui
+     */
+    @Override
+    public void deleteObject(Long id) {
+        throw new RuntimeException("RepositoryFactory.delete: " + id);
+    }
+
+    @Override
+    public void deleteContainer(Long id) {
+    	throw new ServiceUnavailableException();
+    }
+    
+    @Override
+    public void deleteAccount(Long id) {
+    	throw new InsufficientStorageException();
+    }
 }
