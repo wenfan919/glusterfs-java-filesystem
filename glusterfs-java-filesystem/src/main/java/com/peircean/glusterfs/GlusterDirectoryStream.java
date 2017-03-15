@@ -23,6 +23,7 @@ public class GlusterDirectoryStream implements DirectoryStream<Path> {
             throw new IllegalStateException("Already iterating!");
         }
         GlusterDirectoryIterator iterator = new GlusterDirectoryIterator();
+        // this is a ****
         iterator.setStream(this);
         iterator.setFilter(filter);
         this.iterator = iterator;
